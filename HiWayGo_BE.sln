@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiwayGoAPI", "WebApplication1\HiwayGoAPI.csproj", "{A0CE2FAC-A0EE-412B-9C78-33E7495B9CAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiwayGo_API", "HiwayGo_API\HiwayGo_API.csproj", "{79B8AF1D-B609-49AE-A501-B92371F50984}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0CE2FAC-A0EE-412B-9C78-33E7495B9CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0CE2FAC-A0EE-412B-9C78-33E7495B9CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0CE2FAC-A0EE-412B-9C78-33E7495B9CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0CE2FAC-A0EE-412B-9C78-33E7495B9CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B8AF1D-B609-49AE-A501-B92371F50984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B8AF1D-B609-49AE-A501-B92371F50984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B8AF1D-B609-49AE-A501-B92371F50984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B8AF1D-B609-49AE-A501-B92371F50984}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
