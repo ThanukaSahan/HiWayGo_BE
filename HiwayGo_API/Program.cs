@@ -1,12 +1,36 @@
+using System;
+using System.IO;
+using System.Reflection;
 using HiwayGo_API.Entity;
 using HiwayGo_API.Repository;
+using HiwayGo_API.Logic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+// Swagger (Swashbuckle)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "HiwayGo API",
+        Version = "v1",
+        Description = "API documentation for HiwayGo"
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -16,12 +40,62 @@ builder.Services.AddDbContext<DataContext>(options =>
 // register repositories
 builder.Services.AddRepositories();
 
+// register logic services
+builder.Services.AddScoped<IBusDetailLogic, BusDetailLogic>();
+builder.Services.AddScoped<IBusModelLogic, BusModelLogic>();
+builder.Services.AddScoped<IBusBookingLogic, BusBookingLogic>();
+builder.Services.AddScoped<IUserLogic, UserLogic>();
+builder.Services.AddScoped<IUserRoleLogic, UserRoleLogic>();
+
 var app = builder.Build();
+
 app.MapGet("/", () => "PostgreSQL connected successfully!");
-// Configure the HTTP request pipeline.
+
+// -- Apply EF Core migrations / ensure DB exists at startup --
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<DataContext>();
+        // Use Migrate() to apply pending migrations (recommended)
+        context.Database.Migrate();
+
+        // If you prefer to create DB without migrations (NOT recommended for production), use:
+        // context.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        // Obtain logger and log the error so the app startup output shows the details.
+        var logger = services.GetService<Microsoft.Extensions.Logging.ILoggerFactory>()?
+            .CreateLogger("DatabaseMigration");
+        logger?.LogError(ex, "An error occurred while migrating or creating the database.");
+        Console.Error.WriteLine(ex);
+        // Decide whether to rethrow or continue. Rethrowing will stop the app.
+        // throw;
+    }
+}
+// -- end DB bootstrap --
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "HiwayGo API v1");
+        c.RoutePrefix = "swagger";
+    });
+
     app.MapOpenApi();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "HiwayGo API v1");
+        c.RoutePrefix = "swagger";
+    });
 }
 
 app.UseHttpsRedirection();

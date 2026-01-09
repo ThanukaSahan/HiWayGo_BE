@@ -5,23 +5,23 @@ namespace HiwayGo_API.Entity
     public class User
     {
         public Guid Id { get; set; }
-        [Required]
+       // [Required]
         public string NIC { get; set; } //user name
         public string FirstName { get; set; }
-        [Required]
+       // [Required]
         public string LastName { get; set; }
-        [EmailAddress]
+        //[EmailAddress]
         public string Email { get; set; }
-        [Required] 
+       // [Required] 
         public string Password { get; set; }
-        [Required]
-        [Phone]
+       // [Required]
+       // [Phone]
         public int PhoneNumber { get; set; }
 
-        [Required]
+        //[Required]
         public Guid UserRoleId { get; set; }
         public bool IsOwner { get; set; }        
         public bool IsActive { get; set; }
-        public UserRole UserRole { get; set; }
+       // public UserRole UserRole { get; set; }
     }
 }
