@@ -41,10 +41,11 @@ namespace HiwayGo_API.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<ActionResult> Create([FromBody] User user)
         {
             var created = await _logic.CreateAsync(user);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            if (created == null) return Ok(false);
+            return Ok(true);            
         }
 
         [HttpPut("{id:guid}")]

@@ -6,6 +6,7 @@ using HiwayGo_API.Repository;
 using HiwayGo_API.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,11 @@ builder.Services.AddScoped<IBusModelLogic, BusModelLogic>();
 builder.Services.AddScoped<IBusBookingLogic, BusBookingLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IUserRoleLogic, UserRoleLogic>();
+
+// register only the assembly that contains your profiles
+builder.Services.AddAutoMapper(cfg => {
+    // any extra configuration here
+}, AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

@@ -1,4 +1,3 @@
-using HiwayGo_API.Entity;
 using HiwayGo_API.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,14 +40,14 @@ namespace HiwayGo_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserRole role)
+        public async Task<IActionResult> Create([FromBody] HiwayGo_API.Entity.UserRole role)
         {
             var created = await _logic.CreateAsync(role);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UserRole role)
+        public async Task<IActionResult> Update(Guid id, [FromBody] HiwayGo_API.Entity.UserRole role)
         {
             if (role == null || role.Id != id) return BadRequest();
             var existing = await _logic.GetByIdAsync(id);
