@@ -16,6 +16,6 @@ namespace HiwayGo_API.Logic
         // Create/Update/Delete continue to use the entity
         Task<UserRole> CreateAsync(UserRole role);
         Task UpdateAsync(UserRole role);
-        Task<bool> DeleteAsync(Guid id);
+        Task<bool> DeleteAsync(Guid id);        
     }
 }

@@ -3,6 +3,7 @@ using HiwayGo_API.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using HiwayGo_API.Dto;
 
 namespace HiwayGo_API.Controllers
 {
@@ -45,7 +46,7 @@ namespace HiwayGo_API.Controllers
         {
             var created = await _logic.CreateAsync(user);
             if (created == null) return Ok(false);
-            return Ok(true);            
+            return Ok(true);
         }
 
         [HttpPut("{id:guid}")]
@@ -65,6 +66,24 @@ namespace HiwayGo_API.Controllers
             var removed = await _logic.DeleteAsync(id);
             if (!removed) return NotFound();
             return NoContent();
+        }
+
+        // POST api/user/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var token = await _logic.LoginAsync(request.Email, request.Password);
+            if (token == null) return Unauthorized();
+            return Ok(new LoginResponse { Token = token });
+        }
+
+        // POST api/user/resetpassword
+        [HttpPost("resetpassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            var result = await _logic.ResetPasswordAsync(request.Email, request.NewPassword);
+            if (!result) return BadRequest();
+            return Ok(true);
         }
     }
 }

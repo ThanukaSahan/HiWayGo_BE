@@ -13,5 +13,10 @@ namespace HiwayGo_API.Logic
         Task<User> CreateAsync(User user);
         Task UpdateAsync(User user);
         Task<bool> DeleteAsync(Guid id);
+
+        Task<bool> ResetPasswordAsync(string nic, string newPassword);
+
+        // Returns JWT token string when successful, null when authentication fails
+        Task<string?> LoginAsync(string nic, string password);
     }
 }

@@ -42,5 +42,10 @@ namespace HiwayGo_API.Repository
         {
             return await base.DeleteAsync(id);
         }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }

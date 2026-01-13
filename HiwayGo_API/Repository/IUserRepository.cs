@@ -15,5 +15,7 @@ namespace HiwayGo_API.Repository
         Task<User?> SelectByIdAsync(Guid id);
         Task UpdateAsync(User user);
         Task<bool> DeleteAsync(Guid id);
+
+        Task<User?> GetByEmailAsync(string email);
     }
 }

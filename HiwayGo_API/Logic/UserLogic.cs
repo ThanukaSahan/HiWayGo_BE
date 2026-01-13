@@ -1,5 +1,6 @@
 using HiwayGo_API.Entity;
 using HiwayGo_API.Repository;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace HiwayGo_API.Logic
     {
         private readonly IUserRepository _userRepo;
         private readonly IUserRoleRepository _roleRepo;
+        private readonly IJwtService _jwtService;
 
-        public UserLogic(IUserRepository userRepo, IUserRoleRepository roleRepo)
+        public UserLogic(IUserRepository userRepo, IUserRoleRepository roleRepo, IJwtService jwtService)
         {
             _userRepo = userRepo;
             _roleRepo = roleRepo;
+            _jwtService = jwtService;
         }
 
         public async Task<User> CreateAsync(User user)
@@ -60,6 +63,37 @@ namespace HiwayGo_API.Logic
             if (role == null) throw new InvalidOperationException("User role not found.");
 
             await _userRepo.UpdateAsync(user);
+        }
+
+        // Reset password implementation (simple replace). Consider hashing in production.
+        public async Task<bool> ResetPasswordAsync(string email, string newPassword)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(newPassword))
+            {
+                return false;
+            }
+
+            var user = await _userRepo.GetByEmailAsync(email);
+            if (user == null) return false;
+
+            user.Password = newPassword;
+            await _userRepo.UpdateAsync(user);
+            return true;
+        }
+
+        // Very simple authentication: compares plain text password. Replace with hashing in production.
+        public async Task<string?> LoginAsync(string email, string password)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                return null;
+
+            var user = await _userRepo.GetByEmailAsync(email);
+            if (user == null) return null;
+
+            if (user.Password != password) return null;
+
+            var token = _jwtService.GenerateToken(user);
+            return token;
         }
     }
 }
