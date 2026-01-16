@@ -3,6 +3,7 @@ using System;
 using HiwayGo_API.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HiwayGo_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260115095056_inital2")]
+    partial class inital2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace HiwayGo_API.Migrations
 
                     b.Property<bool>("IsTransactionComplete")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("NoOfSeats")
-                        .HasColumnType("integer");
 
                     b.Property<decimal>("PayAmount")
                         .HasColumnType("decimal(10,2)");
@@ -151,36 +151,6 @@ namespace HiwayGo_API.Migrations
                     b.HasIndex("BusRouteId");
 
                     b.ToTable("BusRouteFares");
-                });
-
-            modelBuilder.Entity("HiwayGo_API.Entity.BusShedule", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BusNo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("CreateUserID")
-                        .HasColumnType("uuid");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time without time zone");
-
-                    b.Property<Guid>("RootId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BusShedules");
                 });
 
             modelBuilder.Entity("HiwayGo_API.Entity.User", b =>

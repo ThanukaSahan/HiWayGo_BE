@@ -14,6 +14,7 @@ namespace HiwayGo_API.Entity
         public DbSet<BusRouteFare> BusRouteFares { get; set; }
         public DbSet<BusDetail> BusDetails { get; set; }
         public DbSet<BusBooking> BusBookings { get; set; }
-
+        public DbSet<BusShedule> BusShedules { get; set; }
+       
     }
 }

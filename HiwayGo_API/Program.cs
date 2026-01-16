@@ -50,6 +50,8 @@ builder.Services.AddScoped<IBusModelLogic, BusModelLogic>();
 builder.Services.AddScoped<IBusBookingLogic, BusBookingLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IUserRoleLogic, UserRoleLogic>();
+builder.Services.AddScoped<IBusSheduleRepository, BusSheduleRepository>();
+
 
 // register Jwt service
 builder.Services.AddSingleton<IJwtService, JwtService>();

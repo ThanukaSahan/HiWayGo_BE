@@ -1,3 +1,4 @@
+using HiwayGo_API.DTO;
 using HiwayGo_API.Entity;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,9 @@ namespace HiwayGo_API.Logic
         Task<BusBooking> CreateAsync(BusBooking booking);
         Task UpdateAsync(BusBooking booking);
         Task<bool> DeleteAsync(Guid id);
+
+        // expose bus routes retrieval
+        Task<IEnumerable<BusRoute>> GetAllBusRouteAsync();
+        Task<IEnumerable<ShowBusBookingDTO?>> GetBusBookingDetailsAsync(Guid id);
     }
 }

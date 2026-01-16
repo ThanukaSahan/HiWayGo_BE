@@ -69,5 +69,10 @@ namespace HiwayGo_API.Repository
             await SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<BusRoute>> GetAllBusRouteAsync()
+        {
+            return await _context.Set<BusRoute>().ToListAsync();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using HiwayGo_API.DTO;
 using HiwayGo_API.Entity;
 using HiwayGo_API.Logic;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace HiwayGo_API.Controllers
             return Ok(new { routeId, count });
         }
 
-        [HttpPost]
+        [HttpPost("newBooking")]
         public async Task<IActionResult> Create([FromBody] BusBooking booking)
         {
             var created = await _logic.CreateAsync(booking);
@@ -62,6 +63,19 @@ namespace HiwayGo_API.Controllers
             var removed = await _logic.DeleteAsync(id);
             if (!removed) return NotFound();
             return NoContent();
+        }
+
+        // changed route to avoid duplicate HttpGet signature (was colliding with GetAll)
+        [HttpGet("routes")]
+        public async Task<IActionResult> GetBusRoutes()
+        {
+            var items = await _logic.GetAllBusRouteAsync();
+            return Ok(items);
+        }
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<IEnumerable<ShowBusBookingDTO?>>> GetBusBookingDetails(Guid id)
+        {
+            return Ok(await _logic.GetBusBookingDetailsAsync(id));
         }
     }
 }

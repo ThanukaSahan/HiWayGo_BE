@@ -3,6 +3,7 @@ using System;
 using HiwayGo_API.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HiwayGo_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260115105438_inital4")]
+    partial class inital4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace HiwayGo_API.Migrations
 
                     b.Property<bool>("IsTransactionComplete")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("NoOfSeats")
-                        .HasColumnType("integer");
 
                     b.Property<decimal>("PayAmount")
                         .HasColumnType("decimal(10,2)");

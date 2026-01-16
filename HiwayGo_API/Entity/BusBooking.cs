@@ -6,7 +6,7 @@ namespace HiwayGo_API.Entity
     {
         public Guid Id { get; set; }
         public Guid BusRouteId { get; set; }
-        public Guid BusId { get; set; }
+        public Nullable<Guid> BusId { get; set; }
         public Guid BookBy { get; set; }
 
         [Column(TypeName = "decimal(10,2)")]
@@ -14,6 +14,10 @@ namespace HiwayGo_API.Entity
         public DateTime CreateDate { get; set; }
         public DateTime BookingDate { get; set; }
         public bool IsTransactionComplete { get; set; }
+        public string PickupLocation { get; set; }
+        public int NoOfSeats { get; set; }
+
+        public string BookingCode { get; set; } =String.Empty;
 
     }
 }

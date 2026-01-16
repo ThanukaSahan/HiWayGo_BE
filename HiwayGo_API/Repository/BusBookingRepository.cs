@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace HiwayGo_API.Repository
 {
@@ -16,6 +17,11 @@ namespace HiwayGo_API.Repository
         public async Task<int> CountBookingsForRouteAsync(Guid routeId)
         {
             return await _context.BusBookings.CountAsync(b => b.BusRouteId == routeId);
+        }
+
+        public async Task<IEnumerable<BusRoute>> GetAllBusRouteAsync()
+        {
+            return await _context.Set<BusRoute>().ToListAsync();
         }
 
         // CRUD convenience implementations
@@ -42,6 +48,12 @@ namespace HiwayGo_API.Repository
         public new async Task<bool> DeleteAsync(Guid id)
         {
             return await base.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<BusBooking>> SelectBookByAsync(Guid id)
+        {
+            var busBookinghs = await SelectAllAsync();
+            return busBookinghs.Where(b => b.BookBy == id);            
         }
     }
 }
